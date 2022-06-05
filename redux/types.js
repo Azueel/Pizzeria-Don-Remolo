@@ -1,4 +1,1 @@
-export const types = {
-	/*ejemplo*/
-	login: '[Auth] Login',
-};
+export const types = {};
