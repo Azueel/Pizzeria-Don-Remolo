@@ -3,10 +3,11 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev",
+		"dev": "env TAILWIND_MODE=watch NODE_ENV=development next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"start:css": "tailwindcss -o src/tailwind.css --watch"
 	},
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.8.2",
@@ -19,8 +20,10 @@
 		"redux": "^4.2.0"
 	},
 	"devDependencies": {
-		"eslint": "8.17.0",
-		"eslint-config-next": "12.1.6",
+		"autoprefixer": "^10.4.2",
+		"eslint": "8.9.0",
+		"eslint-config-next": "12.1.0",
+		"postcss": "^8.4.6",
 		"tailwindcss": "^3.0.24"
 	}
 }
