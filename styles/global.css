@@ -1,0 +1,13 @@
+.button {
+	@apply cursor-pointer block w-full rounded-3xl py-2 px-4 shadow outline-none;
+}
+
+.button-primary {
+	@apply cursor-pointer block w-full rounded-3xl py-2 px-2 shadow outline-none text-white bg-primary;
+}
+
+input,
+select,
+textarea {
+	@apply rounded-2xl border border-gray-dark p-3 outline-none focus:border-blue mt-1;
+}
