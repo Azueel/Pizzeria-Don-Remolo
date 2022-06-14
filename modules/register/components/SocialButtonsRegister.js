@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export const SocialButtons = () => {
+export const SocialButtonsRegister = () => {
 	return (
 		<div>
 			<div className="flex py-1 items-center">
@@ -13,14 +13,14 @@ export const SocialButtons = () => {
 					src={require('../../../public/assets/iconGoogle.png')}
 					alt="googleIcon"
 				/>
-				Iniciar Sesión con Google
+				Registrarse con Google
 			</button>
 			<button className="button bg-facebook mt-2 text-white">
 				<Image
 					src={require('../../../public/assets/iconFacebook.png')}
 					alt="facebookIcon"
 				/>
-				Iniciar Sesión con Facebook
+				Registrarse con Facebook
 			</button>
 		</div>
 	);
