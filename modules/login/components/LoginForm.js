@@ -9,7 +9,12 @@ export default function LoginForm() {
 			</div>
 			<div>
 				<label htmlFor="password">Contraseña</label>
-				<input type="password" className="w-full" id="password" autoFocus />
+				<input
+					type="password"
+					className="w-full"
+					id="password"
+					autoFocus
+				/>
 			</div>
 			<div>
 				<span className="text-sm text-primary cursor-pointer">
@@ -20,7 +25,9 @@ export default function LoginForm() {
 			<SocialButtons />
 			<div className="text-center">
 				<span>¿Aún no tienes una cuenta?</span> {''}
-				<span className="font-medium text-primary cursor-pointer">Regístrate</span>
+				<span className="font-medium text-primary cursor-pointer">
+					Regístrate
+				</span>
 			</div>
 		</form>
 	);

@@ -8,7 +8,8 @@ export default function HeaderLogin() {
 				alt="logo don rémolo"
 			/>
 			<h1 className="text-center font-bold text-primary text-xl">
-				Inicio de sesión
+				Regístrate para una <br />
+				mejor experiencia
 			</h1>
 		</div>
 	);
