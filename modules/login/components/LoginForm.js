@@ -13,7 +13,6 @@ export default function LoginForm() {
 					type="password"
 					className="w-full"
 					id="password"
-					autoFocus
 				/>
 			</div>
 			<div>

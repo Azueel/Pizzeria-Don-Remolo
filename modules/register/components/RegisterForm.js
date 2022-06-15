@@ -11,7 +11,7 @@ export default function LoginForm() {
 
 			<div>
 				<label htmlFor="email">Correo electrónico</label>
-				<input type="email" className="w-full" id="email" autoFocus />
+				<input type="email" className="w-full" id="email" />
 			</div>
 			<div>
 				<label htmlFor="password">Contraseña</label>
@@ -19,7 +19,6 @@ export default function LoginForm() {
 					type="password"
 					className="w-full"
 					id="password"
-					autoFocus
 				/>
 			</div>
 
@@ -43,7 +42,7 @@ export default function LoginForm() {
 			</div>
 			<SocialButtonsRegister />
 			<div className="text-center">
-				<span>¿Ya Tienes Cuenta?</span>
+				<span>¿Ya Tienes Cuenta? </span>
 				<span className="font-medium text-primary cursor-pointer">
 					Inicia Sesión
 				</span>
