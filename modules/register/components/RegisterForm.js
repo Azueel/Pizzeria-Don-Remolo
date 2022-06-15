@@ -32,20 +32,6 @@ export default function LoginForm() {
 			validate={({ user, email, password }) => {
 				let errores = {};
 
-<<<<<<< HEAD
-			<div>
-				<label htmlFor="email">Correo electrónico</label>
-				<input type="email" className="w-full" id="email" />
-			</div>
-			<div>
-				<label htmlFor="password">Contraseña</label>
-				<input
-					type="password"
-					className="w-full"
-					id="password"
-				/>
-			</div>
-=======
 				//validacion Nombre
 				if (!user) {
 					errores.user = 'Por Favor Ingrese Su Nombre';
@@ -54,7 +40,6 @@ export default function LoginForm() {
 				} else if (!/^[a-zA-ZÀ-ÿ\s]{1,256}$/.test(user)) {
 					errores.user = 'El nombre solo puede contener letras y espacios';
 				}
->>>>>>> a5c7956580e46bdc53920baa67d20a74e93dd4cc
 
 				//validacion correo
 				if (!email) {
@@ -65,26 +50,6 @@ export default function LoginForm() {
 					errores.email = 'Por Favor ingresa un email valido';
 				}
 
-<<<<<<< HEAD
-			<button className="button-primary mt-3">Registrarse</button>
-			<div className="px-8 text-sm">
-				<p>
-					Al registrarse, aceptas nuestras{' '}
-					<span className="text-primary">Políticas de privacidad</span> y{' '}
-					<span className="text-primary flex justify-center">
-						Terminos y condiciones
-					</span>
-				</p>
-			</div>
-			<SocialButtonsRegister />
-			<div className="text-center">
-				<span>¿Ya Tienes Cuenta? </span>
-				<span className="font-medium text-primary cursor-pointer">
-					Inicia Sesión
-				</span>
-			</div>
-		</form>
-=======
 				//validacion password
 				if (!password) {
 					errores.password = 'La contraseña es requerida';
@@ -162,11 +127,6 @@ export default function LoginForm() {
 							onBlur={handleBlur}
 							autoFocus
 						/>
-						<Image
-							onClick={handleClickEye}
-							src={require('../../../public/assets/eye-off.png')}
-							alt="eye-off"
-						/>
 
 						{touched.password && errors.password && (
 							<div className="text-red p-0 ml-2 mb-2">
@@ -227,6 +187,5 @@ export default function LoginForm() {
 				</form>
 			)}
 		</Formik>
->>>>>>> a5c7956580e46bdc53920baa67d20a74e93dd4cc
 	);
 }
