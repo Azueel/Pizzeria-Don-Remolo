@@ -9,18 +9,22 @@ export const SocialButtonsRegister = () => {
 				<span className="flex-grow border-t border-gray-dark"></span>
 			</div>
 			<button className="button border border-gray-dark mt-2 text-black ">
-				<Image
-					src={require('../../../public/assets/iconGoogle.png')}
-					alt="googleIcon"
-				/>
-				Registrarse con Google
+				<div className='w-max absolute'>
+					<Image
+						src={require('../../../public/assets/iconGoogle.png')}
+						alt="googleIcon"
+					/>
+				</div>
+				<span>Registrarse con Google</span>
 			</button>
 			<button className="button bg-facebook mt-2 text-white">
-				<Image
-					src={require('../../../public/assets/iconFacebook.png')}
-					alt="facebookIcon"
-				/>
-				Registrarse con Facebook
+				<div className='w-max absolute'>
+					<Image
+						src={require('../../../public/assets/iconFacebook.png')}
+						alt="facebookIcon"
+					/>
+				</div>
+				<span>Registrarse con Facebook</span>
 			</button>
 		</div>
 	);

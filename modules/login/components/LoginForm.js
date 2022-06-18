@@ -14,7 +14,7 @@ export default function LoginForm() {
 		email: Yup.string()
 			.matches(
 				/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})\D$/i,
-				'Introduce un correo electrónico válido por favor',
+				'Introduce un correo electrónico válido por favor'
 			)
 			.required('El correo electrónico es obligatorio'),
 		password: Yup.string().required('Ingresa tu contraseña por favor'),

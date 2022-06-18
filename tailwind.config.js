@@ -12,6 +12,7 @@ module.exports = {
 			gray: '#c5c5c5',
 			'gray-light': '#e6e6e6',
 			facebook: '#395185',
+			yellow: 'rgb(250 204 21)',
 		},
 		fontFamily: {
 			sans: ['Inter', 'sans-serif'],
