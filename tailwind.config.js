@@ -11,7 +11,7 @@ module.exports = {
 			'gray-dark': '#595959',
 			gray: '#c5c5c5',
 			'gray-light': '#e6e6e6',
-			facebook: '#3b5998',
+			facebook: '#395185',
 		},
 		fontFamily: {
 			sans: ['Inter', 'sans-serif'],
