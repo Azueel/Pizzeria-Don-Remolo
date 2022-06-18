@@ -13,6 +13,7 @@ module.exports = {
 			'gray-light': '#e6e6e6',
 			facebook: '#395185',
 			yellow: 'rgb(250 204 21)',
+			modal_bg: 'hsla(0, 0%, 20%, .30)'
 		},
 		fontFamily: {
 			sans: ['Inter', 'sans-serif'],

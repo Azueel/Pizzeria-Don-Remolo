@@ -3,7 +3,7 @@ import HeaderLogin from './components/HeaderLogin';
 
 export const Main = () => {
 	return (
-		<div className="p-4 sm:px-8 w-full sm:max-w-xl ">
+		<div className="sm:px-8 sm:max-w-xl rounded-md bg-white">
 			<HeaderLogin />
 			<LoginForm />
 		</div>

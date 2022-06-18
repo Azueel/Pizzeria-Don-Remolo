@@ -82,7 +82,7 @@ export default function LoginForm() {
 				handleBlur,
 				touched,
 			}) => (
-				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+				<form className="flex flex-col" onSubmit={handleSubmit}>
 					<div>
 						<label htmlFor="email">Nombre Completo</label>
 						<input
@@ -109,7 +109,6 @@ export default function LoginForm() {
 							value={values.email}
 							onChange={handleChange}
 							onBlur={handleBlur}
-							autoFocus
 						/>
 						{touched.email && errors.email && (
 							<div className="text-red p-0 ml-2 mb-2">{errors.email}</div>
@@ -125,7 +124,6 @@ export default function LoginForm() {
 							value={values.password}
 							onChange={handleChange}
 							onBlur={handleBlur}
-							autoFocus
 						/>
 
 						{touched.password && errors.password && (
