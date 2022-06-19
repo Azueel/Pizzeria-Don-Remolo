@@ -19,6 +19,11 @@ services:
     environment:
       - ConnectionStrings__DefaultConnection=Server=db; User Id=appuser; Password=secret; Database=DonRemolo
       - ASPNETCORE_ENVIRONMENT=Development
+      - Token__Key=My super secret key
+      - Token__Issuer=http://localhost:44390
+      - ApiUrl=http://localhost:44390/
+      - FacebookAuthSettings__AppId=1273805316692082
+      - FacebookAuthSettings__AppSecret=0b410dab073c27b604a24baae0e117a0
     depends_on:
       - db
   # frontend:
