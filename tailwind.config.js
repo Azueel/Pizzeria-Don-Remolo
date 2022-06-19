@@ -13,10 +13,22 @@ module.exports = {
 			'gray-light': '#e6e6e6',
 			facebook: '#395185',
 			yellow: 'rgb(250 204 21)',
-			modal_bg: 'hsla(0, 0%, 20%, .30)'
+			modal_bg: 'hsla(0, 0%, 20%, .30)',
 		},
 		fontFamily: {
 			sans: ['Inter', 'sans-serif'],
+		},
+		fontSize: {
+			xxs: '.85rem',
+		},
+		maxWidth: {
+			xxs: '12rem',
+		},
+		minWidth: {
+			sm: '24rem',
+			md: '32rem',
+			lg: '40rem',
+			xl: '48rem',
 		},
 		extend: {
 			boxShadow: {
