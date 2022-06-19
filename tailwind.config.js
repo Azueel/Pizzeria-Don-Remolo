@@ -1,9 +1,5 @@
 module.exports = {
-	content: [
-		'./pages/**/*.js',
-		'./components/**/*.js',
-		'./modules/**/*.{jsx,js}',
-	],
+	content: ['./pages/**/*.js', './components/**/*.js', './modules/**/*.{jsx,js}'],
 	theme: {
 		colors: {
 			primary: '#e74423',
@@ -15,12 +11,24 @@ module.exports = {
 			'gray-dark': '#595959',
 			gray: '#c5c5c5',
 			'gray-light': '#e6e6e6',
-			facebook: '#3b5998',
+			facebook: '#395185',
 			yellow: 'rgb(250 204 21)',
-			modal_bg: 'hsla(0, 0%, 20%, .30)'
+			modal_bg: 'hsla(0, 0%, 20%, .30)',
 		},
 		fontFamily: {
 			sans: ['Inter', 'sans-serif'],
+		},
+		fontSize: {
+			xxs: '.85rem',
+		},
+		maxWidth: {
+			xxs: '12rem',
+		},
+		minWidth: {
+			sm: '24rem',
+			md: '32rem',
+			lg: '40rem',
+			xl: '48rem',
 		},
 		extend: {
 			boxShadow: {

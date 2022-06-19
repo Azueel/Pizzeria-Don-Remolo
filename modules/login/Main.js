@@ -1,11 +1,11 @@
 import LoginForm from './components/LoginForm';
-import HeaderLogin from './components/HeaderLogin';
+import HeaderForm from '../shared/HeaderForm';
 
-export const Main = () => {
+export const Main = ({ handleModal }) => {
 	return (
-		<div className="sm:px-8 sm:max-w-xl rounded-md bg-white">
-			<HeaderLogin />
-			<LoginForm />
+		<div className="w-full sm:min-w-md">
+			<HeaderForm title="Inicio de sesión" />
+			<LoginForm handleModal={handleModal} />
 		</div>
 	);
 };

@@ -1,11 +1,11 @@
 import RegisterForm from './components/RegisterForm';
-import HeaderLogin from './components/HeaderRegister';
+import HeaderForm from '../shared/HeaderForm';
 
-export const Main = () => {
+export const Main = ({ handleModal }) => {
 	return (
-		<div className='flex flex-col justify-center items-center h-full p-4 rounded-md bg-white'>
-			<HeaderLogin />
-			<RegisterForm />
+		<div className="w-full sm:min-w-md">
+			<HeaderForm title="Regístrate para una mejor experiencia" />
+			<RegisterForm handleModal={handleModal} />
 		</div>
 	);
 };

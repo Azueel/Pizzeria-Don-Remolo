@@ -1,20 +1,20 @@
 import { useRouter } from 'next/router';
-import { SocialButtons } from './SocialButtons';
+import { SocialButtons } from '../../shared/SocialButtons';
 import { Formik, Form } from 'formik';
 import { Input } from '../../shared/Input';
 import * as Yup from 'yup';
 import { loginUser } from '../../../services/authService';
-import { login } from '../../../redux/slices/auth';
+import { auth } from '../../../redux/slices/auth';
 import { useDispatch } from 'react-redux';
 
-export default function LoginForm() {
+export default function LoginForm({ handleModal }) {
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const validate = Yup.object({
 		email: Yup.string()
+			.email('Introduce un correo electrónico válido por favor')
 			.matches(
 				/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})\D$/i,
-				'Introduce un correo electrónico válido por favor'
 			)
 			.required('El correo electrónico es obligatorio'),
 		password: Yup.string().required('Ingresa tu contraseña por favor'),
@@ -28,7 +28,7 @@ export default function LoginForm() {
 				try {
 					const response = await loginUser(values);
 					localStorage.setItem('auth', response?.token);
-					dispatch(login({ ...values, token: response?.token }));
+					dispatch(auth({ ...values, token: response?.token }));
 					router.push('/');
 				} catch (error) {
 					console.log(error);
@@ -42,7 +42,7 @@ export default function LoginForm() {
 					<button className="button-primary mt-8" type="submit">
 						Iniciar Sesión
 					</button>
-					<SocialButtons />
+					<SocialButtons action={'Iniciar sesión'} />
 					<div className="text-center">
 						<span>¿Aún no tienes una cuenta?</span> {''}
 						<span

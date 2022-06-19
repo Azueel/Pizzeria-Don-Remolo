@@ -2,7 +2,9 @@ import { Formik } from 'formik';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useState } from 'react';
-import { SocialButtonsRegister } from './SocialButtonsRegister';
+import { SocialButtons } from '../../shared/SocialButtons';
+import { registerUser } from '../../../services/authService';
+import { auth } from '../../../redux/slices/auth';
 
 export default function LoginForm() {
 	const NUM_PATTERN = /[0-9]/;
@@ -44,9 +46,7 @@ export default function LoginForm() {
 				//validacion correo
 				if (!email) {
 					errores.email = 'Por Favor Ingresa un email';
-				} else if (
-					!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email)
-				) {
+				} else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email)) {
 					errores.email = 'Por Favor ingresa un email valido';
 				}
 
@@ -54,17 +54,13 @@ export default function LoginForm() {
 				if (!password) {
 					errores.password = 'La contraseña es requerida';
 				} else if (!NUM_PATTERN.test(password)) {
-					errores.password =
-						'La contraseña debe contener al menos un número';
+					errores.password = 'La contraseña debe contener al menos un número';
 				} else if (!CAPITAL_PATTERN.test(password)) {
-					errores.password =
-						'La contraseña debe contener al menos una mayúscula';
+					errores.password = 'La contraseña debe contener al menos una mayúscula';
 				} else if (!LOWERCASE_PATTERN.test(password)) {
-					errores.password =
-						'La contraseña debe contener al menos una minúscula';
+					errores.password = 'La contraseña debe contener al menos una minúscula';
 				} else if (!NON_ALPHANUMERIC_PATTERN.test(password)) {
-					errores.password =
-						'La contraseña debe contener un carácter especial';
+					errores.password = 'La contraseña debe contener un carácter especial';
 				} else if (password.length < 8 || password.length > 25) {
 					errores.password =
 						'La contraseña debe contener un mínimo de 8 caracteres y no superar 25';
@@ -72,17 +68,24 @@ export default function LoginForm() {
 
 				return errores;
 			}}
-			onSubmit={(date) => {}}
+			onSubmit={async (values) => {
+				try {
+					const response = await registerUser({
+						name: values.user,
+						email: values.email,
+						password: values.password,
+					});
+					localStorage.setItem('auth', response?.token);
+					dispatch(auth({ ...values, token: response?.token }));
+					handleModal();
+					router.push('/');
+				} catch (error) {
+					console.log(error);
+				}
+			}}
 		>
-			{({
-				values,
-				errors,
-				handleSubmit,
-				handleChange,
-				handleBlur,
-				touched,
-			}) => (
-				<form className="flex flex-col" onSubmit={handleSubmit}>
+			{({ values, errors, handleSubmit, handleChange, handleBlur, touched }) => (
+				<form className="flex flex-col gap-1" onSubmit={handleSubmit}>
 					<div>
 						<label htmlFor="email">Nombre Completo</label>
 						<input
@@ -127,18 +130,18 @@ export default function LoginForm() {
 						/>
 
 						{touched.password && errors.password && (
-							<div className="text-red p-0 ml-2 mb-2">
-								{errors.password}
-							</div>
+							<div className="text-red p-0 ml-2">{errors.password}</div>
 						)}
 					</div>
 
-					<div className="flex">
+					<div className="flex pl-4">
 						<Image
-							src={require('../../../public/assets/alert-circle.png')}
+							src={require('../../../public/assets/alert-circle.svg')}
 							alt="alert-circle"
 						/>
-						<p className="ml-2 text-xs">Debe tener minimo 8 caracteres</p>
+						<p className="ml-2 text-tiny text-gray-dark">
+							Debe tener mínimo 8 caracteres
+						</p>
 					</div>
 
 					{values.password.length >= 8 && values.password.length <= 9 && (
@@ -165,18 +168,30 @@ export default function LoginForm() {
 					<div className="px-8 text-sm">
 						<p>
 							Al registrarse, aceptas nuestras{' '}
-							<span className="text-primary">Políticas de privacidad</span>{' '}
+							<a
+								className="text-primary hover:font-bold cursor-pointer"
+								target="_blank"
+								href="https://pizzeriadonremolo/terminos-privacidad"
+								rel="noopener noreferrer"
+							>
+								Políticas de privacidad
+							</a>{' '}
 							y{' '}
-							<span className="text-primary flex justify-center">
-								Terminos y condiciones
-							</span>
+							<a
+								className="text-primary flex justify-center hover:font-bold cursor-pointer"
+								target="_blank"
+								href="https://pizzeriadonremolo/tyc"
+								rel="noopener noreferrer"
+							>
+								Términos y condiciones
+							</a>
 						</p>
 					</div>
-					<SocialButtonsRegister />
+					<SocialButtons action={'Registrarse'} />
 					<div className="text-center">
 						<span>¿Ya Tienes Cuenta? </span>
 						<span
-							className="font-medium text-primary cursor-pointer"
+							className="font-medium text-primary hover:font-bold cursor-pointer"
 							onClick={() => router.push('/login')}
 						>
 							Inicia Sesión
