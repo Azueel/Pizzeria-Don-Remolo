@@ -35,6 +35,9 @@ module.exports = {
 				fab: '0px 0px 5px 1px rgba(0, 0, 0, 0.25)',
 				button: '0px 4px 5px rgba(0, 0, 0, 0.3)',
 			},
+			gridTemplateColumns: {
+				'nav_desktop_layout': '20% 45% 25% 1fr'
+			},
 		},
 		plugins: [],
 	},
