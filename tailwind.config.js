@@ -41,7 +41,7 @@ module.exports = {
 				}
 			},
 			screens: {
-				lg: '1150px',
+				nav_mq: '1150px',
 				desktop_bk: '902px'
 			},
 			boxShadow: {
