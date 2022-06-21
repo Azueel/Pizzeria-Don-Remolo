@@ -1,13 +1,16 @@
+import { useRouter } from "next/router";
 import { NavItem } from "./NavItem";
 
-export const NavBar = () => {
+export const NavBar = ({ itemsLayout, children, home }) => {
 	return (
-		<nav className="nav-bar-container flex justify-end items-center h-full">
-			<ul className="nav-items-list flex gap-4 font-bold">
+		<nav className="nav-bar-container flex justify-center items-center h-full lg:justify-end">
+			<ul className={`nav-items-list flex ${itemsLayout || ''} gap-4 font-bold`}>
+				{home ? <NavItem page='/' title='Inicio' /> : null}
 				<NavItem page='/' title='Menú' />
 				<NavItem page='/' title='Rastrea tu pedido' />
 				<NavItem page='/' title='Locales' />
-				<NavItem page='/' title='Deja tu comentario' />
+				<NavItem page='/' title='Dejar comentario' />
+				{children}
 			</ul>
 		</nav>
 	);

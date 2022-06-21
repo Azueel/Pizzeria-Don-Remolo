@@ -31,12 +31,25 @@ module.exports = {
 			xl: '48rem',
 		},
 		extend: {
+			animation: {
+				fade_in: 'fade_in .2s ease forwards'
+			},
+			keyframes: {
+				fade_in: {
+					from: {opacity: '0'},
+					to: {opacity: '1'}
+				}
+			},
+			screens: {
+				lg: '1150px',
+				desktop_bk: '902px'
+			},
 			boxShadow: {
 				fab: '0px 0px 5px 1px rgba(0, 0, 0, 0.25)',
 				button: '0px 4px 5px rgba(0, 0, 0, 0.3)',
 			},
 			gridTemplateColumns: {
-				'nav_desktop_layout': '20% 45% 25% 1fr'
+				'nav_desktop_layout': '10% 55% 25% 1fr'
 			},
 		},
 		plugins: [],

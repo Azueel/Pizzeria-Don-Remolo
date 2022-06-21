@@ -3,11 +3,12 @@ export const defaultButtonStyle = [
 	"h-max",
 	"p-1", 
 	"border-2",  
-	"rounded-xl", 
+	"rounded-xl",
 ].join(' ');
 
 export const loginButtonStyle = [
 	"text-primary",
+	"bg-white",
 	"border-primary",
 	"hover:text-white", 
 	"hover:bg-primary",
