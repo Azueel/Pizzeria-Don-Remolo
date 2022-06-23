@@ -16,7 +16,6 @@ const modalSlice = createSlice({
 				if(state.register) state.login = false;
 				state.register = !state.register;
 			} else if(action.payload === 'menu') {
-				console.log(action.payload)
 				state.menu = !state.menu;
 			}
 		},

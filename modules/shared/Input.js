@@ -8,7 +8,7 @@ export const Input = ({ label, ...props }) => {
 			<input
 				type="text"
 				autoComplete="off"
-				className={`w-full ${data.touched && data.error && 'border-red'}`}
+				className={`w-full max-w-[512px] ${data.touched && data.error && 'border-red'}`}
 				{...field}
 				{...props}
 			/>

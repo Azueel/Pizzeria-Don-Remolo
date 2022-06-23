@@ -65,12 +65,12 @@ export default function LoginForm() {
 			}}
 		>
 			{(formik) => (
-				<Form className="flex flex-col gap-4">
+				<Form className="flex flex-col w-full">
 					<Input label="Correo electrónico" name="email" type="email" />
 					{errorMessage && <ErrorMessage message={errorMessage} />}
 					<Input label="Contraseña" name="password" type="password" />
 					<button
-						className="button-primary mt-3 disabled:opacity-50 disabled:cursor-not-allowed"
+						className="button-primary w-full max-w-[512px] mt-3 disabled:opacity-50 disabled:cursor-not-allowed"
 						type="submit"
 						iserror={errorMessage}
 						disabled={!(formik.isValid && formik.dirty)}
@@ -78,7 +78,7 @@ export default function LoginForm() {
 						Iniciar Sesión
 					</button>
 					<SocialButtons action={'Iniciar sesión'} />
-					<div className="text-center">
+					<div className="w-full max-w-[512px] text-center">
 						<span>¿Aún no tienes una cuenta?</span> {''}
 						<span
 							className="font-medium text-primary hover:font-bold cursor-pointer"
