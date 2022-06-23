@@ -1,20 +1,65 @@
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useState } from 'react';
 import { SocialButtons } from '../../shared/SocialButtons';
 import { registerUser } from '../../../services/authService';
 import { auth } from '../../../redux/slices/auth';
+import * as Yup from 'yup';
+import { Input } from '../../shared/Input';
+import { PasswordSecurityLevel } from './PasswordSecurityLevel';
+import { LinksTermsAndPolicies } from './LinksTermsAndPolicies';
+import { Notification } from '../../shared/Notification';
+import { useDispatch } from 'react-redux';
+import { ErrorMessage } from '../../shared/ErrorMessage';
 
-export default function LoginForm() {
+export default function RegisterForm() {
+	const [isOpenNotification, setIsOpenNotification] = useState(false);
+	const [infoNotification, setInfoNotification] = useState({
+		icon: '',
+		message: '',
+	});
+	const [showing, setShowing] = useState(false);
+	const [securityPassword, setSecurityPassword] = useState('');
+	const [errorMessage, setErrorMessage] = useState('');
+
+	const router = useRouter();
+	const dispatch = useDispatch();
+
 	const NUM_PATTERN = /[0-9]/;
 	const CAPITAL_PATTERN = /[A-Z]/;
 	const LOWERCASE_PATTERN = /[a-z]/;
 	const NON_ALPHANUMERIC_PATTERN = /[@$!%*#?&+-]/;
 
-	const router = useRouter();
-	const [showing, setShowing] = useState(false);
-	const [securityPassword, setSecurityPassword] = useState('');
+	const validate = Yup.object({
+		name: Yup.string()
+			.strict()
+			.required('Ingresa tu nombre por favor')
+			.min(2, 'Ingresa al menos dos caracteres')
+			.matches(
+				/^[a-zA-ZÀ-ÿ\s]{1,256}$/,
+				'Tu nombre solo puede contener letras y espacios',
+			)
+			.max(256, 'Tu Nombre no puede superar los 256 caracteres'),
+		email: Yup.string()
+			.email('Introduce un correo electrónico válido por favor')
+			.required('El correo electrónico es obligatorio')
+			.matches(
+				/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})\D$/i,
+				'Introduce un correo electrónico válido por favor',
+			),
+		password: Yup.string()
+			.required('Ingresa tu contraseña por favor')
+			.min(2, 'La contraseña debe contener un mínimo de 8 caracteres')
+			.matches(NUM_PATTERN, 'La contraseña debe contener al menos un número')
+			.matches(CAPITAL_PATTERN, 'La contraseña debe contener al menos una mayúscula')
+			.matches(LOWERCASE_PATTERN, 'La contraseña debe contener al menos una minúscula')
+			.matches(
+				NON_ALPHANUMERIC_PATTERN,
+				'La contraseña debe contener un carácter especial',
+			)
+			.max(25, 'La contraseña no debe superar los 25 caracteres'),
+	});
 
 	const handleClickEye = () => {
 		if (showing === false) {
@@ -27,47 +72,12 @@ export default function LoginForm() {
 	return (
 		<Formik
 			initialValues={{
-				user: '',
+				name: '',
 				email: '',
 				password: '',
 			}}
-			validate={({ user, email, password }) => {
-				let errores = {};
-
-				//validacion Nombre
-				if (!user) {
-					errores.user = 'Por Favor Ingrese Su Nombre';
-				} else if (user.length > 256) {
-					errores.user = 'Su Nombre no puede superar los 256 caracteres';
-				} else if (!/^[a-zA-ZÀ-ÿ\s]{1,256}$/.test(user)) {
-					errores.user = 'El nombre solo puede contener letras y espacios';
-				}
-
-				//validacion correo
-				if (!email) {
-					errores.email = 'Por Favor Ingresa un email';
-				} else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email)) {
-					errores.email = 'Por Favor ingresa un email valido';
-				}
-
-				//validacion password
-				if (!password) {
-					errores.password = 'La contraseña es requerida';
-				} else if (!NUM_PATTERN.test(password)) {
-					errores.password = 'La contraseña debe contener al menos un número';
-				} else if (!CAPITAL_PATTERN.test(password)) {
-					errores.password = 'La contraseña debe contener al menos una mayúscula';
-				} else if (!LOWERCASE_PATTERN.test(password)) {
-					errores.password = 'La contraseña debe contener al menos una minúscula';
-				} else if (!NON_ALPHANUMERIC_PATTERN.test(password)) {
-					errores.password = 'La contraseña debe contener un carácter especial';
-				} else if (password.length < 8 || password.length > 25) {
-					errores.password =
-						'La contraseña debe contener un mínimo de 8 caracteres y no superar 25';
-				}
-
-				return errores;
-			}}
+			validationSchema={validate}
+			validator={() => ({})}
 			onSubmit={async (values) => {
 				try {
 					const response = await registerUser({
@@ -75,118 +85,52 @@ export default function LoginForm() {
 						email: values.email,
 						password: values.password,
 					});
+					setInfoNotification({
+						icon: 'success',
+						message: 'Tu cuenta se ha creado de manera exitosa.',
+					});
+					console.log(response);
 					localStorage.setItem('auth', response?.token);
 					dispatch(auth({ ...values, token: response?.token }));
-					handleModal();
 					router.push('/');
+					setIsOpenNotification(true);
 				} catch (error) {
-					console.log(error);
+					if (error.response.data.message === 'Email in use') {
+						setErrorMessage(
+							'Ya existe una cuenta asociada a este correo. Por favor inicia sesión o registra una cuenta nueva.',
+						);
+						return;
+					}
+					setInfoNotification({
+						icon: 'error',
+						message: 'Ha ocurrido un error. Inténtalo más tarde.',
+					});
+					setIsOpenNotification(true);
 				}
 			}}
 		>
-			{({ values, errors, handleSubmit, handleChange, handleBlur, touched }) => (
-				<form className="flex flex-col gap-1" onSubmit={handleSubmit}>
-					<div>
-						<label htmlFor="email">Nombre Completo</label>
-						<input
-							type="text"
-							className="w-full"
-							name="user"
-							value={values.user}
-							onChange={handleChange}
-							onBlur={handleBlur}
-							autoFocus
-						/>
-					</div>
-					{touched.user && errors.user && (
-						<div className="text-red ml-2 ">{errors.user}</div>
-					)}
-
-					<div>
-						<label htmlFor="email">Correo electrónico</label>
-						<input
-							type="email"
-							className="w-full"
-							id="email"
-							name="email"
-							value={values.email}
-							onChange={handleChange}
-							onBlur={handleBlur}
-						/>
-						{touched.email && errors.email && (
-							<div className="text-red p-0 ml-2 mb-2">{errors.email}</div>
-						)}
-					</div>
-					<div>
-						<label htmlFor="password">Contraseña</label>
-						<input
-							type={showing ? 'text' : 'password'}
-							className="w-full"
-							id="password"
-							name="password"
-							value={values.password}
-							onChange={handleChange}
-							onBlur={handleBlur}
-						/>
-
-						{touched.password && errors.password && (
-							<div className="text-red p-0 ml-2">{errors.password}</div>
-						)}
-					</div>
-
+			{(formik) => (
+				<Form className="flex flex-col gap-3">
+					<Input label="Nombre" name="name" type="text" />
+					<Input label="Correo electrónico" name="email" type="email" />
+					{errorMessage && <ErrorMessage message={errorMessage} />}
+					<Input label="Contraseña" name="password" type="password" />
 					<div className="flex pl-4">
 						<Image
 							src={require('../../../public/assets/alert-circle.svg')}
 							alt="alert-circle"
 						/>
-						<p className="ml-2 text-tiny text-gray-dark">
-							Debe tener mínimo 8 caracteres
-						</p>
+						<p className="ml-2 text-xxs text-gray-dark">Debe tener mínimo 8 caracteres</p>
 					</div>
-
-					{values.password.length >= 8 && values.password.length <= 9 && (
-						<div>
-							<p className="text-xs">Seguridad:</p>
-							<hr className="w-1/4 border-red border-4" />
-						</div>
-					)}
-
-					{values.password.length >= 10 && values.password.length <= 12 && (
-						<div>
-							<p className="text-xs">Seguridad:</p>
-							<hr className="w-1/2 border-yellow border-4" />
-						</div>
-					)}
-					{values.password.length >= 13 && values.password.length <= 25 && (
-						<div>
-							<p className="text-xs">Seguridad:</p>
-							<hr className="w-full border-green border-4" />
-						</div>
-					)}
-
-					<button className="button-primary mt-3">Registrarse</button>
-					<div className="px-8 text-sm">
-						<p>
-							Al registrarse, aceptas nuestras{' '}
-							<a
-								className="text-primary hover:font-bold cursor-pointer"
-								target="_blank"
-								href="https://pizzeriadonremolo/terminos-privacidad"
-								rel="noopener noreferrer"
-							>
-								Políticas de privacidad
-							</a>{' '}
-							y{' '}
-							<a
-								className="text-primary flex justify-center hover:font-bold cursor-pointer"
-								target="_blank"
-								href="https://pizzeriadonremolo/tyc"
-								rel="noopener noreferrer"
-							>
-								Términos y condiciones
-							</a>
-						</p>
-					</div>
+					<PasswordSecurityLevel password={formik.values.password} />
+					<button
+						className="button-primary mt-3 disabled:opacity-50 disabled:cursor-not-allowed"
+						type="submit"
+						disabled={!(formik.isValid && formik.dirty)}
+					>
+						Registrarse
+					</button>
+					<LinksTermsAndPolicies />
 					<SocialButtons action={'Registrarse'} />
 					<div className="text-center">
 						<span>¿Ya Tienes Cuenta? </span>
@@ -196,8 +140,15 @@ export default function LoginForm() {
 						>
 							Inicia Sesión
 						</span>
-					</div>
-				</form>
+					</div>{' '}
+					{isOpenNotification && (
+						<Notification
+							message={infoNotification.message}
+							icon={infoNotification.icon}
+							setIsOpenNotification={setIsOpenNotification}
+						/>
+					)}
+				</Form>
 			)}
 		</Formik>
 	);
