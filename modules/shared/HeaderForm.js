@@ -5,7 +5,7 @@ export default function HeaderForm({ title }) {
 	return (
 		<>
 			<div className='flex justify-end w-full max-w-[512px]'> <CloseBtn /> </div>
-			<div className="flex justify-evenly items-center w-full max-w-[512px] mb-4">
+			<div className="flex justify-evenly items-center w-full max-w-[512px] ">
 				<Image
 					src={require('../../public/assets/logo-fondo-blanco.svg')}
 					alt="logo don rémolo"

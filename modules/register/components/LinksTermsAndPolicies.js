@@ -1,6 +1,6 @@
 export const LinksTermsAndPolicies = () => {
 	return (
-		<div className="px-8 text-sm">
+		<div className="text-center text-[12px] lg:text-[13px]">
 			<p>
 				Al registrarse, aceptas nuestras{' '}
 				<a

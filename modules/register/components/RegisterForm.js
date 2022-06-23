@@ -110,7 +110,7 @@ export default function RegisterForm() {
 			}}
 		>
 			{(formik) => (
-				<Form className="flex flex-col gap-3">
+				<Form className="flex flex-col">
 					<Input label="Nombre" name="name" type="text" />
 					<Input label="Correo electrónico" name="email" type="email" />
 					{errorMessage && <ErrorMessage message={errorMessage} />}
@@ -133,12 +133,12 @@ export default function RegisterForm() {
 					<LinksTermsAndPolicies />
 					<SocialButtons action={'Registrarse'} />
 					<div className="text-center">
-						<span>¿Ya Tienes Cuenta? </span>
+						<span>¿Ya tienes cuenta? </span>
 						<span
 							className="font-medium text-primary hover:font-bold cursor-pointer"
 							onClick={() => router.push('/login')}
 						>
-							Inicia Sesión
+							Inicia sesión
 						</span>
 					</div>{' '}
 					{isOpenNotification && (
