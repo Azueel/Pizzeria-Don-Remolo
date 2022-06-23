@@ -1,15 +1,25 @@
-import { useRouter } from 'next/router';
-import { SocialButtons } from '../../shared/SocialButtons';
 import { Formik, Form } from 'formik';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { SocialButtons } from '../../shared/SocialButtons';
 import { Input } from '../../shared/Input';
 import * as Yup from 'yup';
 import { loginUser } from '../../../services/authService';
 import { auth } from '../../../redux/slices/auth';
 import { useDispatch } from 'react-redux';
+import { Notification } from '../../shared/Notification';
+import { ErrorMessage } from '../../shared/ErrorMessage';
 
-export default function LoginForm({ handleModal }) {
+export default function LoginForm() {
+	const [isOpenNotification, setIsOpenNotification] = useState(false);
+	const [infoNotification, setInfoNotification] = useState({
+		icon: '',
+		message: '',
+	});
+	const [errorMessage, setErrorMessage] = useState('');
 	const dispatch = useDispatch();
 	const router = useRouter();
+
 	const validate = Yup.object({
 		email: Yup.string()
 			.email('Introduce un correo electrónico válido por favor')
@@ -19,9 +29,13 @@ export default function LoginForm({ handleModal }) {
 			.required('El correo electrónico es obligatorio'),
 		password: Yup.string().required('Ingresa tu contraseña por favor'),
 	});
+
 	return (
 		<Formik
-			initialValues={{ email: '', password: '' }}
+			initialValues={{
+				email: '',
+				password: '',
+			}}
 			validationSchema={validate}
 			validator={() => ({})}
 			onSubmit={async (values) => {
@@ -29,29 +43,57 @@ export default function LoginForm({ handleModal }) {
 					const response = await loginUser(values);
 					localStorage.setItem('auth', response?.token);
 					dispatch(auth({ ...values, token: response?.token }));
+					setInfoNotification({
+						icon: 'success',
+						message: 'Bienvenido nuevamente!',
+					});
 					router.push('/');
+					setIsOpenNotification(true);
 				} catch (error) {
-					console.log(error);
+					if (error.response.data.message === "The user doesn't exist") {
+						setErrorMessage(
+							'Correo no registrado. Revisa si hay un error y vuelve a intentar.',
+						);
+						return;
+					} else {
+						setErrorMessage(
+							'Correo o contraseña incorrectos. Revisa si hay un error y vuelve a intentar.',
+						);
+						return;
+					}
 				}
 			}}
 		>
 			{(formik) => (
 				<Form className="flex flex-col gap-4">
 					<Input label="Correo electrónico" name="email" type="email" />
+					{errorMessage && <ErrorMessage message={errorMessage} />}
 					<Input label="Contraseña" name="password" type="password" />
-					<button className="button-primary mt-8" type="submit">
+					<button
+						className="button-primary mt-3 disabled:opacity-50 disabled:cursor-not-allowed"
+						type="submit"
+						iserror={errorMessage}
+						disabled={!(formik.isValid && formik.dirty)}
+					>
 						Iniciar Sesión
 					</button>
 					<SocialButtons action={'Iniciar sesión'} />
 					<div className="text-center">
 						<span>¿Aún no tienes una cuenta?</span> {''}
 						<span
-							className="font-medium text-primary cursor-pointer hover:font-bold"
+							className="font-medium text-primary hover:font-bold cursor-pointer"
 							onClick={() => router.push('/register')}
 						>
 							Regístrate
 						</span>
 					</div>
+					{isOpenNotification && (
+						<Notification
+							message={infoNotification.message}
+							icon={infoNotification.icon}
+							setIsOpenNotification={setIsOpenNotification}
+						/>
+					)}
 				</Form>
 			)}
 		</Formik>

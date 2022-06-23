@@ -1,9 +1,9 @@
 .button {
-	@apply cursor-pointer block w-full rounded-3xl py-2 px-4 shadow outline-none hover:opacity-80 transition-opacity;
+	@apply cursor-pointer block w-full rounded-3xl py-2 px-4 shadow outline-none transition-opacity;
 }
 
 .button-primary {
-	@apply cursor-pointer block w-full rounded-3xl py-2 px-2 shadow outline-none text-white bg-primary hover:opacity-80 transition-opacity;
+	@apply cursor-pointer block w-full rounded-3xl py-2 px-2 shadow outline-none text-white bg-primary transition-opacity;
 }
 
 input,
@@ -14,4 +14,8 @@ textarea {
 
 label {
 	@apply pl-4;
+}
+
+button:hover:not([disabled]) {
+	@apply opacity-80;
 }

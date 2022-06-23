@@ -21,16 +21,5 @@ export const create = (opts = {}) => {
 		}
 		return request;
 	});
-
-	http.interceptors.response.use(
-		(response) => response.data,
-		(error) => {
-			if (error.response && [401, 403].includes(error.response.status)) {
-				logout();
-			}
-
-			return Promise.reject(error);
-		},
-	);
 	return http;
 };

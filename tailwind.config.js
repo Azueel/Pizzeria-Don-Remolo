@@ -32,26 +32,34 @@ module.exports = {
 		},
 		extend: {
 			animation: {
-				fade_in: 'fade_in .2s ease forwards'
+				fade_in: 'fade_in .2s ease forwards',
 			},
 			keyframes: {
 				fade_in: {
-					from: {opacity: '0'},
-					to: {opacity: '1'}
-				}
+					from: { opacity: '0' },
+					to: { opacity: '1' },
+				},
 			},
 			screens: {
 				nav_mq: '1150px',
-				desktop_bk: '902px'
+				desktop_bk: '902px',
 			},
 			boxShadow: {
 				fab: '0px 0px 5px 1px rgba(0, 0, 0, 0.25)',
 				button: '0px 4px 5px rgba(0, 0, 0, 0.3)',
 			},
 			gridTemplateColumns: {
-				'nav_desktop_layout': '10% 55% 25% 1fr'
+				nav_desktop_layout: '10% 55% 25% 1fr',
 			},
 		},
 		plugins: [],
+	},
+	variants: {
+		extend: {
+			opacity: ['disabled'],
+			cursor: ['disabled'],
+			backgroundColor: ['disabled', 'hover'],
+			textColor: ['disabled'],
+		},
 	},
 };
