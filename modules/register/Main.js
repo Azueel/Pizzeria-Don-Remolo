@@ -1,11 +1,11 @@
 import RegisterForm from './components/RegisterForm';
 import HeaderForm from '../shared/HeaderForm';
 
-const Main = ({ handleModal }) => {
+const Main = () => {
 	return (
-		<div className="w-full sm:min-w-md">
+		<div className="w-full h-full sm:min-w-md overflow-y-auto">
 			<HeaderForm title="Regístrate para una mejor experiencia" />
-			<RegisterForm handleModal={handleModal} />
+			<RegisterForm />
 		</div>
 	);
 };
