@@ -45,7 +45,7 @@ export default function RegisterForm() {
 			.email('Introduce un correo electrónico válido por favor')
 			.required('El correo electrónico es obligatorio')
 			.matches(
-				/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})\D$/i,
+				/(?!^[.+&'_-]*@.*$)(^[_\w\d+&'-]+(\.[_\w\d+&'-]*)*@[\w\d-]+(\.[\w\d-]+)*\.(([\d]{1,3})|([\w]{2,}))$)/i,
 				'Introduce un correo electrónico válido por favor',
 			),
 		password: Yup.string()
