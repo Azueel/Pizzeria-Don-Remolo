@@ -9,6 +9,7 @@ import { auth } from '../../../redux/slices/auth';
 import { useDispatch } from 'react-redux';
 import { Notification } from '../../shared/Notification';
 import { ErrorMessage } from '../../shared/ErrorMessage';
+import { useOnModalChange } from '../../../hooks/useOnModalChange';
 
 export default function LoginForm() {
 	const [isOpenNotification, setIsOpenNotification] = useState(false);
@@ -19,6 +20,7 @@ export default function LoginForm() {
 	const [errorMessage, setErrorMessage] = useState('');
 	const dispatch = useDispatch();
 	const router = useRouter();
+	const { handleWindow } = useOnModalChange();
 
 	const validate = Yup.object({
 		email: Yup.string()
@@ -82,7 +84,8 @@ export default function LoginForm() {
 						<span>¿Aún no tienes una cuenta?</span> {''}
 						<span
 							className="font-medium text-primary hover:font-bold cursor-pointer"
-							onClick={() => router.push('/register')}
+							data-modal='register'
+							onClick={handleWindow}
 						>
 							Regístrate
 						</span>

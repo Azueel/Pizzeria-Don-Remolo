@@ -12,6 +12,7 @@ import { LinksTermsAndPolicies } from './LinksTermsAndPolicies';
 import { Notification } from '../../shared/Notification';
 import { useDispatch } from 'react-redux';
 import { ErrorMessage } from '../../shared/ErrorMessage';
+import { useOnModalChange } from '../../../hooks/useOnModalChange';
 
 export default function RegisterForm() {
 	const [isOpenNotification, setIsOpenNotification] = useState(false);
@@ -25,6 +26,7 @@ export default function RegisterForm() {
 
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const { handleWindow } = useOnModalChange();
 
 	const NUM_PATTERN = /[0-9]/;
 	const CAPITAL_PATTERN = /[A-Z]/;
@@ -136,7 +138,8 @@ export default function RegisterForm() {
 						<span>¿Ya tienes cuenta? </span>
 						<span
 							className="font-medium text-primary hover:font-bold cursor-pointer"
-							onClick={() => router.push('/login')}
+							data-modal='login'
+							onClick={handleWindow}
 						>
 							Inicia sesión
 						</span>
