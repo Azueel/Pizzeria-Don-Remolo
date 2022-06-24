@@ -39,7 +39,7 @@ export default function LoginForm() {
 			}}
 			validationSchema={validate}
 			validator={() => ({})}
-			onSubmit={async (values) => {
+			onSubmit={async (values, { resetForm, setSubmitting }) => {
 				try {
 					const response = await loginUser(values);
 					localStorage.setItem('auth', response?.token);
@@ -51,6 +51,7 @@ export default function LoginForm() {
 					router.push('/');
 					setIsOpenNotification(true);
 				} catch (error) {
+					setSubmitting(false);
 					if (error.response.data.message === "The user doesn't exist") {
 						setErrorMessage(
 							'Correo no registrado. Revisa si hay un error y vuelve a intentar.',
@@ -63,6 +64,12 @@ export default function LoginForm() {
 						return;
 					}
 				}
+				resetForm({
+					values: {
+						email: '',
+						password: '',
+					},
+				});
 			}}
 		>
 			{(formik) => (

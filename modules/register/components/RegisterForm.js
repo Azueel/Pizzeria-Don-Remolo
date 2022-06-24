@@ -78,7 +78,7 @@ export default function RegisterForm() {
 			}}
 			validationSchema={validate}
 			validator={() => ({})}
-			onSubmit={async (values) => {
+			onSubmit={async (values, { resetForm }) => {
 				try {
 					const response = await registerUser({
 						name: values.user,
@@ -89,7 +89,6 @@ export default function RegisterForm() {
 						icon: 'success',
 						message: 'Tu cuenta se ha creado de manera exitosa.',
 					});
-					console.log(response);
 					localStorage.setItem('auth', response?.token);
 					dispatch(auth({ ...values, token: response?.token }));
 					router.push('/');
@@ -107,6 +106,13 @@ export default function RegisterForm() {
 					});
 					setIsOpenNotification(true);
 				}
+				resetForm({
+					values: {
+						name: '',
+						email: '',
+						password: '',
+					},
+				});
 			}}
 		>
 			{(formik) => (
