@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import HeroSection from '../modules/hero-section/Main';
+import { Main } from '../modules/home/Main';
 
 export default function Home() {
 	return (
@@ -14,7 +14,7 @@ export default function Home() {
 					src="https://connect.facebook.net/en_US/sdk.js"
 				></script>
 			</Head>
-			<HeroSection />
+			<Main />
 		</div>
 	);
 }
