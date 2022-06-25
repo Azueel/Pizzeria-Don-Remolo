@@ -26,7 +26,8 @@ export default function LoginForm() {
 		email: Yup.string()
 			.email('Introduce un correo electrónico válido por favor')
 			.matches(
-				/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})\D$/i,
+				/(?!^[.+&'_-]*@.*$)(^[_\w\d+&'-]+(\.[_\w\d+&'-]*)*@[\w\d-]+(\.[\w\d-]+)*\.(([\d]{1,3})|([\w]{2,}))$)/i,
+				'Introduce un correo electrónico válido por favor',
 			)
 			.required('El correo electrónico es obligatorio'),
 		password: Yup.string().required('Ingresa tu contraseña por favor'),
@@ -40,7 +41,7 @@ export default function LoginForm() {
 			}}
 			validationSchema={validate}
 			validator={() => ({})}
-			onSubmit={async (values) => {
+			onSubmit={async (values, { resetForm, setSubmitting }) => {
 				try {
 					const response = await loginUser(values);
 					localStorage.setItem('auth', response?.token);
@@ -52,6 +53,7 @@ export default function LoginForm() {
 					router.push('/');
 					setIsOpenNotification(true);
 				} catch (error) {
+					setSubmitting(false);
 					if (error.response.data.message === "The user doesn't exist") {
 						setErrorMessage(
 							'Correo no registrado. Revisa si hay un error y vuelve a intentar.',
@@ -64,6 +66,12 @@ export default function LoginForm() {
 						return;
 					}
 				}
+				resetForm({
+					values: {
+						email: '',
+						password: '',
+					},
+				});
 			}}
 		>
 			{(formik) => (

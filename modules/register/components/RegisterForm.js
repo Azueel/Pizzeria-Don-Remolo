@@ -47,7 +47,7 @@ export default function RegisterForm() {
 			.email('Introduce un correo electrónico válido por favor')
 			.required('El correo electrónico es obligatorio')
 			.matches(
-				/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})\D$/i,
+				/(?!^[.+&'_-]*@.*$)(^[_\w\d+&'-]+(\.[_\w\d+&'-]*)*@[\w\d-]+(\.[\w\d-]+)*\.(([\d]{1,3})|([\w]{2,}))$)/i,
 				'Introduce un correo electrónico válido por favor',
 			),
 		password: Yup.string()
@@ -80,7 +80,7 @@ export default function RegisterForm() {
 			}}
 			validationSchema={validate}
 			validator={() => ({})}
-			onSubmit={async (values) => {
+			onSubmit={async (values, { resetForm }) => {
 				try {
 					const response = await registerUser({
 						name: values.user,
@@ -91,7 +91,6 @@ export default function RegisterForm() {
 						icon: 'success',
 						message: 'Tu cuenta se ha creado de manera exitosa.',
 					});
-					console.log(response);
 					localStorage.setItem('auth', response?.token);
 					dispatch(auth({ ...values, token: response?.token }));
 					router.push('/');
@@ -109,6 +108,13 @@ export default function RegisterForm() {
 					});
 					setIsOpenNotification(true);
 				}
+				resetForm({
+					values: {
+						name: '',
+						email: '',
+						password: '',
+					},
+				});
 			}}
 		>
 			{(formik) => (
