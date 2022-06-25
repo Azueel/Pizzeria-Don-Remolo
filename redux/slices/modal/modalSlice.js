@@ -13,7 +13,7 @@ const modalSlice = createSlice({
 				if(state.register) state.register = false;
 				state.login = !state.login;
 			} else if(action.payload === 'register') {
-				if(state.register) state.login = false;
+				if(state.login) state.login = false;
 				state.register = !state.register;
 			} else if(action.payload === 'menu') {
 				state.menu = !state.menu;

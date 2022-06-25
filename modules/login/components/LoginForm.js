@@ -9,6 +9,7 @@ import { auth } from '../../../redux/slices/auth';
 import { useDispatch } from 'react-redux';
 import { Notification } from '../../shared/Notification';
 import { ErrorMessage } from '../../shared/ErrorMessage';
+import { useOnModalChange } from '../../../hooks/useOnModalChange';
 
 export default function LoginForm() {
 	const [isOpenNotification, setIsOpenNotification] = useState(false);
@@ -19,6 +20,7 @@ export default function LoginForm() {
 	const [errorMessage, setErrorMessage] = useState('');
 	const dispatch = useDispatch();
 	const router = useRouter();
+	const { handleWindow } = useOnModalChange();
 
 	const validate = Yup.object({
 		email: Yup.string()
@@ -27,7 +29,12 @@ export default function LoginForm() {
 				/(?!^[.+&'_-]*@.*$)(^[_\w\d+&'-]+(\.[_\w\d+&'-]*)*@[\w\d-]+(\.[\w\d-]+)*\.(([\d]{1,3})|([\w]{2,}))$)/i,
 				'Introduce un correo electrónico válido por favor',
 			)
-			.required('El correo electrónico es obligatorio'),
+			.required(() => {
+				if(errorMessage !== '') {
+					setErrorMessage('');
+					return 'El correo electrónico es obligatorio.'
+				} else return 'El correo electrónico es obligatorio.'
+			}),
 		password: Yup.string().required('Ingresa tu contraseña por favor'),
 	});
 
@@ -53,6 +60,12 @@ export default function LoginForm() {
 				} catch (error) {
 					setSubmitting(false);
 					if (error.response.data.message === "The user doesn't exist") {
+						resetForm({
+							values: {
+								email: '',
+								password: '',
+							},
+						});
 						setErrorMessage(
 							'Correo no registrado. Revisa si hay un error y vuelve a intentar.',
 						);
@@ -91,7 +104,8 @@ export default function LoginForm() {
 						<span>¿Aún no tienes una cuenta?</span> {''}
 						<span
 							className="font-medium text-primary hover:font-bold cursor-pointer"
-							onClick={() => router.push('/register')}
+							data-modal='register'
+							onClick={handleWindow}
 						>
 							Regístrate
 						</span>
