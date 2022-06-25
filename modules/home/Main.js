@@ -1,10 +1,12 @@
 import React from 'react';
-import { Gallery } from './components/Gallery';
+import { Hero } from './sections/Hero/Hero';
+import { Gallery } from './components/Gallery/Gallery';
 
 export const Main = () => {
 	return (
-		<div>
+		<section>
+			<Hero />
 			<Gallery />
-		</div>
+		</section>
 	);
 };

@@ -52,7 +52,8 @@ module.exports = {
 				nav_desktop_layout: '10% 55% 25% 1fr',
 			},
 			backgroundImage: {
-				'bg-gallery': "url('/public/assets/gallery/picture1.png')",
+				gallery:
+					"url('https://github.com/margaZM/Pizzeria-Don-Remolo/blob/main/public/assets/gallery/bg-hashtag.png?raw=true')",
 			},
 		},
 		plugins: [],

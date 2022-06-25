@@ -6,7 +6,7 @@ export const HeroSectionStyles = [
 	'min-h-[340px]',
 	'h-full',
 	'p-5',
-	'bg-[#F1F0DE]',
+	'bg-secondary',
 	//DESKTOP
-	'xl:p-0'
+	'xl:p-0',
 ].join(' ');
