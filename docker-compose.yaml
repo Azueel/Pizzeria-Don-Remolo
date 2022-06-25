@@ -24,6 +24,7 @@ services:
       - ApiUrl=http://localhost:44390/
       - FacebookAuthSettings__AppId=1273805316692082
       - FacebookAuthSettings__AppSecret=0b410dab073c27b604a24baae0e117a0
+      - GoogleAuthSettings__ClientId=876166062131-v0bj8o9ka4c777q6bkrmcevqh9q3fiut.apps.googleusercontent.com
     depends_on:
       - db
   # frontend:

@@ -63,13 +63,14 @@ export default function LoginForm() {
 						);
 						return;
 					}
+				} finally {
+					resetForm({
+						values: {
+							email: '',
+							password: '',
+						},
+					});
 				}
-				resetForm({
-					values: {
-						email: '',
-						password: '',
-					},
-				});
 			}}
 		>
 			{(formik) => (
