@@ -94,6 +94,7 @@ export default function RegisterForm() {
 					router.push('/');
 					setIsOpenNotification(true);
 				} catch (error) {
+					setSubmitting(false);
 					if (error.response.data.message === 'Email in use') {
 						setErrorMessage(
 							'Ya existe una cuenta asociada a este correo. Por favor inicia sesión o registra una cuenta nueva.',
@@ -105,14 +106,15 @@ export default function RegisterForm() {
 						message: 'Ha ocurrido un error. Inténtalo más tarde.',
 					});
 					setIsOpenNotification(true);
+				} finally {
+					resetForm({
+						values: {
+							name: '',
+							email: '',
+							password: '',
+						},
+					});
 				}
-				resetForm({
-					values: {
-						name: '',
-						email: '',
-						password: '',
-					},
-				});
 			}}
 		>
 			{(formik) => (
