@@ -51,6 +51,9 @@ module.exports = {
 			gridTemplateColumns: {
 				nav_desktop_layout: '10% 55% 25% 1fr',
 			},
+			backgroundImage: {
+				'bg-gallery': "url('/public/assets/gallery/picture1.png')",
+			},
 		},
 		plugins: [],
 	},
