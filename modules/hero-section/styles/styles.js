@@ -8,5 +8,5 @@ export const HeroSectionStyles = [
 	'p-5',
 	'bg-[#F1F0DE]',
 	//DESKTOP
-	'desktop_bk:bg-white'
+	'xl:p-0'
 ].join(' ');
