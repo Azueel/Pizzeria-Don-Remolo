@@ -4,7 +4,7 @@ import React from 'react';
 export const Gallery = () => {
 	return (
 		<section className="bg-gallery w-full bg-center">
-			<section className="mx-auto leading-10 py-12 pb-20 md:w-3/4">
+			<section className="mx-auto leading-10 py-12 pb-20 md:w-5/6">
 				<section className="flex justify-center">
 					<h2 className="text-center uppercase font-bold bg-secondary rounded-lg px-4 inline-block">
 						Conoce más de nosotros @Pizzeriadonremolo
