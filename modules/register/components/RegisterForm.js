@@ -13,6 +13,7 @@ import { Notification } from '../../shared/Notification';
 import { useDispatch } from 'react-redux';
 import { ErrorMessage } from '../../shared/ErrorMessage';
 import { useOnModalChange } from '../../../hooks/useOnModalChange';
+import { handleModal } from '../../../redux/slices/modal/modalSlice';
 
 export default function RegisterForm() {
 	const [isOpenNotification, setIsOpenNotification] = useState(false);
@@ -92,8 +93,11 @@ export default function RegisterForm() {
 						message: 'Tu cuenta se ha creado de manera exitosa.',
 					});
 					localStorage.setItem('auth', response?.data.token);
-					localStorage.setItem('userName', response?.data.token);
-					dispatch(auth({ ...response.data }));
+					localStorage.setItem('userName', values.name);
+					dispatch(auth({ name: values.name, email: values.email, token: response.data.token }));
+					setTimeout(() => {
+						dispatch(handleModal('register-success'));
+					}, 2100);
 					router.push('/');
 					setIsOpenNotification(true);
 				} catch (error) {
