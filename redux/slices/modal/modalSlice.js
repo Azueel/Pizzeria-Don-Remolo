@@ -17,7 +17,7 @@ const modalSlice = createSlice({
 				state.register = !state.register;
 			} else if(action.payload === 'menu') {
 				state.menu = !state.menu;
-			}
+			} else if(action.payload === 'login-success') state.login = !state.login;
 		},
 	}
 });

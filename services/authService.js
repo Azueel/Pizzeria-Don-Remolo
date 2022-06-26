@@ -12,7 +12,6 @@ export const registerUser = (body) => {
 	return http.post('/account/Register', body);
 };
 
-export const logout = () => {
-	window.localStorage.removeItem('token');
-	window.location.assign('/login');
+export const loging = () => {
+	window.localStorage.removeItem('auth');
 };

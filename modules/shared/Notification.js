@@ -4,7 +4,7 @@ import Image from 'next/image';
 export const Notification = ({ message, icon, setIsOpenNotification }) => {
 	setTimeout(() => {
 		setIsOpenNotification(false);
-	}, 8000);
+	}, 1500);
 	return (
 		<div className="absolute top-10 right-10 z-10 flex items-center justify-between max-w-md p-2 px-8 gap-2 bg-primary rounded-3xl text-white intro-y">
 			<Image

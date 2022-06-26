@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { loging } from '../../../services/authService';
 
 export const userSlice = createSlice({
 	name: 'user',
@@ -11,6 +12,7 @@ export const userSlice = createSlice({
 		},
 		logout: (state) => {
 			state.user = null;
+			loging();
 		},
 	},
 });

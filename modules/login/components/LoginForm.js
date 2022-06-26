@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { Notification } from '../../shared/Notification';
 import { ErrorMessage } from '../../shared/ErrorMessage';
 import { useOnModalChange } from '../../../hooks/useOnModalChange';
+import { handleModal } from '../../../redux/slices/modal/modalSlice';
 
 export default function LoginForm() {
 	const [isOpenNotification, setIsOpenNotification] = useState(false);
@@ -49,8 +50,11 @@ export default function LoginForm() {
 			onSubmit={async (values, { resetForm, setSubmitting }) => {
 				try {
 					const response = await loginUser(values);
-					localStorage.setItem('auth', response?.token);
-					dispatch(auth({ ...values, token: response?.token }));
+					localStorage.setItem('auth', response?.data.token);
+					dispatch(auth({ ...response.data, token: response?.data.token }));
+					setTimeout(() => {
+						dispatch(handleModal('login-success'));
+					}, 2100);
 					setInfoNotification({
 						icon: 'success',
 						message: 'Bienvenido nuevamente!',
