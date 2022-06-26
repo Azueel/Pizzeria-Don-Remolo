@@ -15,7 +15,7 @@ export const most_popular_info = [
 	},
 	{ 
 		id: 57,
-		title: 'Empanada jamón y queso',
+		title: 'Emp. jamón y queso',
 		description: 'Jamón y queso mozarella.',
 		originalPrice: '1.00',
 		promotionalPrice: '1.20'
