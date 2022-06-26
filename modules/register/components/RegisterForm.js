@@ -83,7 +83,7 @@ export default function RegisterForm() {
 			onSubmit={async (values, { resetForm }) => {
 				try {
 					const response = await registerUser({
-						name: values.user,
+						name: values.name,
 						email: values.email,
 						password: values.password,
 					});
@@ -91,12 +91,13 @@ export default function RegisterForm() {
 						icon: 'success',
 						message: 'Tu cuenta se ha creado de manera exitosa.',
 					});
-					localStorage.setItem('auth', response?.token);
-					dispatch(auth({ ...values, token: response?.token }));
+					localStorage.setItem('auth', response?.data.token);
+					localStorage.setItem('userName', response?.data.token);
+					dispatch(auth({ ...response.data }));
 					router.push('/');
 					setIsOpenNotification(true);
 				} catch (error) {
-					setSubmitting(false);
+					// setSubmitting(false);
 					if (error.response.data.message === 'Email in use') {
 						setErrorMessage(
 							'Ya existe una cuenta asociada a este correo. Por favor inicia sesión o registra una cuenta nueva.',
@@ -117,20 +118,15 @@ export default function RegisterForm() {
 						},
 					});
 				}
-				resetForm({
-					values: {
-						name: '',
-						email: '',
-						password: '',
-					},
-				});
 			}}
 		>
 			{(formik) => (
 				<Form className="flex flex-col">
 					<Input label="Nombre" name="name" type="text" />
-					<Input label="Correo electrónico" name="email" type="email" />
-					{errorMessage && <ErrorMessage message={errorMessage} />}
+					<div className='flex flex-col gap-3'>
+						<Input label="Correo electrónico" name="email" type="email" />
+						{errorMessage && <ErrorMessage message={errorMessage} />}
+					</div>
 					<Input label="Contraseña" name="password" type="password" />
 					<div className="flex pl-4">
 						<Image
