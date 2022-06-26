@@ -4,7 +4,7 @@ import React from 'react';
 export const Footer = () => {
 	return (
 		<div className="bg-gray-light py-8">
-			<div className="md:w-3/4 grid grid-cols-5 gap-2 mx-auto leading-6">
+			<div className="md:w-5/6 grid grid-cols-5 gap-2 mx-auto leading-6">
 				<Image
 					src={require('/public/assets/logos/logo-transparent.png')}
 					alt="logo-don-remolo"
