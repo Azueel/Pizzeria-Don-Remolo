@@ -53,7 +53,7 @@ export default function RegisterForm() {
 			),
 		password: Yup.string()
 			.required('Ingresa tu contraseña por favor')
-			.min(2, 'La contraseña debe contener un mínimo de 8 caracteres')
+			.min(8, 'La contraseña debe contener un mínimo de 8 caracteres')
 			.matches(NUM_PATTERN, 'La contraseña debe contener al menos un número')
 			.matches(CAPITAL_PATTERN, 'La contraseña debe contener al menos una mayúscula')
 			.matches(LOWERCASE_PATTERN, 'La contraseña debe contener al menos una minúscula')
